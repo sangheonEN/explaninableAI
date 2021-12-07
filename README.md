@@ -15,3 +15,8 @@ XAI
 
 즉, 각 conv layer의 feature를 map으로서 visualization을 가능하게했다.
 
+하지만, 여기서 궁금증이 생긴다. 이 feature를 시각화하고 핵심 region을 찾는다고 해서 내가 할 수 있는 것은 무엇일까?
+
+어느 label에 대한 표현이 핵심 region을 가지고 있겠지만, 그 부분을 강화시키거나 변환해버려야 하는 것인가?
+
+의문이 든다.
