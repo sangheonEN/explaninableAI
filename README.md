@@ -22,3 +22,12 @@ XAI
 그럼, layer 마다 다를것이고 좀 더 덜 필요한 layer가 있고 핵심 layer가 있을 것인데 그것을 아예 배제를 하는게 맞을 것인가?
 
 근데 배제를 한다면, 그 layer가 없어짐으로서 발생하는 side effect가 있지 않을까?
+
+------------------------------------------------------------------------------------------------------------------------
+
+1. [Class Activation Map(CAM), https://arxiv.org/pdf/1512.04150.pdf]: Softmax layer의 feature map을 가져와 예측 class를 출력하기 전에 개별 class가 feature map에서 어느 영역에서 핵심적인 정보를 얻어 정해지는지 시각화 할 수 있음.
+
+2. [Grad CAM, https://arxiv.org/pdf/1610.02391.pdf]: 종단의 activation function을 적용하기 전 FC Layer가 아닌 Global Average pooling이 적용된 모델에 한해서만 CAM이 수행되었지만, 이를 극복하여 Fully connected layer 구조의 모델도 시각화가 가능하도록 연구됨.
+
+
+
