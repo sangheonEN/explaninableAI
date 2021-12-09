@@ -29,6 +29,37 @@ def create_cam(config):
     def hook_feature(module, input, output):
         feature_blobs.append(output.cpu().data.numpy())
 
+        """
+        self.conv = nn.Sequential(
+            nn.Conv2d(3, 32, 3, 1, 1),
+            nn.LeakyReLU(0.2),
+            nn.Conv2d(32, 64, 3, 1, 1),
+            nn.LeakyReLU(0.2),
+            nn.MaxPool2d(2, 2),
+            nn.Conv2d(64, 128, 3, 1, 1),
+            nn.LeakyReLU(0.2),
+            nn.Conv2d(128, 256, 3, 1, 1),
+            nn.LeakyReLU(0.2),
+            nn.MaxPool2d(2, 2),
+            nn.Conv2d(256, 512, 3, 1, 1),
+            nn.LeakyReLU(0.2),
+            nn.MaxPool2d(2,2),
+            nn.Conv2d(512, num_class, 3, 1, 1),
+            nn.LeakyReLU(0.2)
+        )
+        # input image_size 128 // 8 = 16이니 16 x 16 kernel size로 average pooling하면,
+        self.avg_pool = nn.AvgPool2d(img_size // 8)
+        self.classifier = nn.Linear(num_class, num_class)
+        
+        1. model.py에서 정의한 sequence layer는 위와 같이 정의되는데 
+        2. self.conv, self.avg_pool, self.classifier 이런식으로 nn.클래스 생성자의 명칭으로 지정된다.
+        3. 그리고 나중에 내가 원하는 layer를 뽑아 내려면 cnn = CNN() 생성자를 선언하고 
+        4. cnn._modules.get("layer명") -> ex cnn._modules.get("conv"), cnn._modules.get("avg_pool") 등등
+        5. 
+        
+        
+        """
+
     cnn._modules.get(finalconv_name).register_forward_hook(hook_feature)
     params = list(cnn.parameters())
     # get layer only from last layer (softmax layer) -> params[-2] -> softmax layer
