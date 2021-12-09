@@ -55,7 +55,8 @@ def create_cam(config):
         2. self.conv, self.avg_pool, self.classifier 이런식으로 nn.클래스 생성자의 명칭으로 지정된다.
         3. 그리고 나중에 내가 원하는 layer를 뽑아 내려면 cnn = CNN() 생성자를 선언하고 
         4. cnn._modules.get("layer명") -> ex cnn._modules.get("conv"), cnn._modules.get("avg_pool") 등등
-        5. 
+        5. cnn._modules.get(finalconv_name).register_forward_hook(hook_feature): register_forward_hook->순전파일때 layer의 값을 확인함
+        6. def hook_feature(module, input, output): 
         
         
         """
