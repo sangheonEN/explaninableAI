@@ -76,6 +76,9 @@ if __name__ == "__main__":
     data = torch.Tensor([0.05, 0.1])
 
     out = net(data)
+    """
+    https://hongl.tistory.com/158?category=927704 -> retain_graph 설명
+    """
     out.backward(torch.tensor([1,1], dtype=torch.float32), retain_graph=True)
 
 
