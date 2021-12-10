@@ -56,7 +56,8 @@ def create_cam(config):
         3. 그리고 나중에 내가 원하는 layer를 뽑아 내려면 cnn = CNN() 생성자를 선언하고 
         4. cnn._modules.get("layer명") -> ex cnn._modules.get("conv"), cnn._modules.get("avg_pool") 등등
         5. cnn._modules.get(finalconv_name).register_forward_hook(hook_feature): register_forward_hook->순전파일때 layer의 값을 확인함
-        6. def hook_feature(module, input, output): 
+        6. def hook_feature(module, input, output): -> output은 마지막 conv layer의 feature map의 값이 출력된다.
+        7. 그래서 feature_blobs.append(output.cpu().data.numpy()) -> feature_blobs list에 batch마다 저장을 함.
         
         
         """
@@ -67,6 +68,16 @@ def create_cam(config):
     weight_softmax = np.squeeze(params[-2].cpu().data.numpy())
 
     def returnCAM(feature_conv, weight_softmax, class_idx):
+        """
+        1. CAM의 수식인 weight_softmax, feature_conv의 행렬곱연산 후 CAM을 얻고
+        2. 0-1 사이의 값을 가질 수 있게 normalization 실시 (cam - np.min(cam), cam / np.max(cam))
+        3. 255를 곱해 visiualization 할수있게 Scale 보정
+
+        :param feature_conv: Global Average Pooling 전 class num만큼 차원이 만들어진 종단 feature
+        :param weight_softmax: softmax function 후 최종 weight map
+        :param class_idx: softmax function 후 내가 제일 확신하는 class idx
+        :return: Class Activation Map
+        """
         size_upsample = (config.img_size, config.img_size)
         _, nc, h, w = feature_conv.shape
         output_cam = []
@@ -89,6 +100,7 @@ def create_cam(config):
         probs, idx = h_x.sort(0, True)
         print("True label : %d, Predicted label : %d, Probability : %.2f" % (label.item(), idx[0].item(), probs[0].item()))
         CAMs = returnCAM(feature_blobs[0], weight_softmax, [idx[0].item()])
+        # 결과 이미지를 불러와서 그 이미지에 cam value를 연산해줌.
         img = cv2.imread(os.path.join(config.result_path, 'img%d.png' % (i + 1)))
         height, width, _ = img.shape
         heatmap = cv2.applyColorMap(cv2.resize(CAMs[0], (width, height)), cv2.COLORMAP_JET)
