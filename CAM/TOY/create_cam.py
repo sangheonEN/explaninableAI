@@ -60,9 +60,9 @@ def create_cam(config):
         4. cnn._modules.get("layer명") -> ex cnn._modules.get("conv"), cnn._modules.get("avg_pool") 등등
         5. cnn._modules.get(finalconv_name).register_forward_hook(hook_feature): register_forward_hook->순전파일때 layer의 값을 확인함
         6. def hook_feature(module, input, output): -> output은 마지막 conv layer의 feature map의 값이 출력된다.
-        7. 그래서 feature_blobs.append(output.cpu().data.numpy()) -> feature_blobs list에 batch마다 저장을 함.
-        
-        
+        7. 그래서 feature_blobs.append(output.cpu().data.numpy()) -> feature_blobs list에 GAP 이전 feature map을 저장해놓고
+        8. cnn.parameters()[-2]로 -> FC layer의 weight를 불러와서
+        9. 최종적으로 feature map and fc layer weight를 dot product 하여 cam을 구함. 
         """
 
     cnn._modules.get(finalconv_name).register_forward_hook(hook_feature)
