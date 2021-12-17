@@ -47,6 +47,9 @@ def create_cam(config):
             nn.Conv2d(512, num_class, 3, 1, 1),
             nn.LeakyReLU(0.2)
         )
+        self.avg_pool = nn.AvgPool2d(img_size // 8)
+        self.classifier = nn.Linear(num_class, num_class)
+        
         # input image_size 128 // 8 = 16이니 16 x 16 kernel size로 average pooling하면,
         self.avg_pool = nn.AvgPool2d(img_size // 8)
         self.classifier = nn.Linear(num_class, num_class)
@@ -61,6 +64,8 @@ def create_cam(config):
         
         
         """
+    def hook_feature(module, input, output):
+        feature_blobs.append(output.cpu().data.numpy())
 
     cnn._modules.get(finalconv_name).register_forward_hook(hook_feature)
     params = list(cnn.parameters())
