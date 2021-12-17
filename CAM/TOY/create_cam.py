@@ -64,8 +64,6 @@ def create_cam(config):
         
         
         """
-    def hook_feature(module, input, output):
-        feature_blobs.append(output.cpu().data.numpy())
 
     cnn._modules.get(finalconv_name).register_forward_hook(hook_feature)
     params = list(cnn.parameters())
