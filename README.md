@@ -23,7 +23,13 @@ XAI
 
 근데 배제를 한다면, 그 layer가 없어짐으로서 발생하는 side effect가 있지 않을까?
 
-------------------------------------------------------------------------------------------------------------------------
+<hr/>
+
+XAI를 사용하는 목적은 학습 완료 후 weight의 값을 가지고 학습 모델이 image에서 어떤 영역을 보고 Classification을 수행하는지 눈으로 직접 확인할 수 있는 시각화 방법 중 하나라고 생각한다.
+
+따라서, Image에서 어느 영역을 보고 학습 모델이 인지하고 판단하는지 파악하여 추후 어떤 방향으로 학습 모델을 개선하고 변경할 지 판단할 수 있는 인사이트로 사용하면 좋을 듯 하다.
+
+<hr/>
 
 1. [Class Activation Map(CAM), https://arxiv.org/pdf/1512.04150.pdf]: Global Average Pooling Layer 전의 feature map의 parameters와 Global Average Pooling Layer 후의 FC Layer의 Weight를 dot product한 Class Activation Map을 생성하여 Classification 예측 결과를 출력하기 전에 가장 정답에 가까운 Class는 이미지 상에서 어느 영역에서 핵심적인 정보를 보고 판단하는지 시각화 할 수 있음.
 
