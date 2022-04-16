@@ -1,17 +1,15 @@
 import os
-import argparse
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
 
 import model
-import utils
+import dataset
 
 def train(config):
     if not os.path.exists(config.model_path):
         os.mkdir(config.model_path)
 
-    train_loader, num_class = utils.get_trainloader(config.dataset,
+    train_loader, num_class = dataset.get_trainloader(config.dataset,
                                                     config.dataset_path,
                                                     config.img_size,
                                                     config.batch_size)
@@ -47,25 +45,3 @@ def train(config):
         if avg_epoch_loss < min_loss:
             min_loss = avg_epoch_loss
             torch.save(cnn.state_dict(), os.path.join(config.model_path, config.model_name))
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default='CIFAR', choices=['STL', 'CIFAR', 'OWN'])
-    parser.add_argument('--dataset_path', type=str, default='./data')
-    parser.add_argument('--model_path', type=str, default='./model')
-    parser.add_argument('--model_name', type=str, default='model.pth')
-
-    parser.add_argument('--img_size', type=int, default=128)
-    parser.add_argument('--batch_size', type=int, default=32)
-
-    parser.add_argument('--epoch', type=int, default=30)
-    parser.add_argument('--log_step', type=int, default=10)
-    parser.add_argument('--lr', type=float, default=0.001)
-    parser.add_argument('-s', '--save_model_in_epoch', action='store_true')
-    config = parser.parse_args()
-    print(config)
-
-    train(config)
-
-
-

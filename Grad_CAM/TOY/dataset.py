@@ -13,7 +13,6 @@ def get_trainloader(da_name, path, img_size, batch_size):
 
     return torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True), len(dataset.classes)
 
-
 def get_testloader(da_name, path, img_size, batch_size = 1):
     transform = tf.Compose([
         tf.Resize(img_size),
