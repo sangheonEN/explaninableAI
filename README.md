@@ -33,7 +33,7 @@ XAI를 사용하는 목적은 학습 완료 후 weight의 값을 가지고 학�
 
 1. [Class Activation Map(CAM), https://arxiv.org/pdf/1512.04150.pdf]: Global Average Pooling Layer 전의 feature map의 parameters와 Global Average Pooling Layer 후의 FC Layer의 Weight를 dot product한 Class Activation Map을 생성하여 Classification 예측 결과를 출력하기 전에 가장 정답에 가까운 Class는 이미지 상에서 어느 영역에서 핵심적인 정보를 보고 판단하는지 시각화 할 수 있음.
 
-2. [Grad CAM, https://arxiv.org/pdf/1610.02391.pdf]: 종단의 activation function을 적용하기 전 FC Layer가 아닌 Global Average pooling이 적용된 모델에 한해서만 CAM이 수행되었지만, 이를 극복하여 Fully connected layer 구조의 모델도 시각화가 가능하도록 연구됨.
+2. [Grad CAM, https://arxiv.org/pdf/1610.02391.pdf]: 종단의 activation function을 적용하기 전 FC Layer가 아닌 Global Average pooling이 적용된 모델에 한해서만 CAM이 수행되었지만, 이를 극복하여 Fully connected layer 구조의 모델도 시각화가 가능하도록 연구됨. 그래서 원하는 layer가 어떤 구성이더라도 해당 layer에서의 특징 map을 시각화 할 수 있는 것이 강점이다.
 
 
 
