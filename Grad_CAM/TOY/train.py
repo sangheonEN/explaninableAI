@@ -4,8 +4,9 @@ import torch.nn as nn
 
 import model
 import dataset
+import utils
 
-def train(config):
+def trainer(config):
     if not os.path.exists(config.model_path):
         os.mkdir(config.model_path)
 
@@ -23,6 +24,10 @@ def train(config):
 
     print("start_train")
 
+
+    HookB = utils.Hook(cnn._modules['conv'][13], True)
+    HookF = utils.Hook(cnn._modules['conv'][13], False)
+
     for epoch in range(config.epoch):
         epoch_loss = 0
         for i, (images, labels) in enumerate(train_loader):
@@ -33,6 +38,8 @@ def train(config):
             loss.backward()
             optimizer.step()
             epoch_loss += loss.item()
+            print(HookF.inputf[0], HookF.outputf[0])
+            print(HookB.inputb[0], HookB.outputb[0])
             if (i + 1) % config.log_step == 0:
                 if config.save_model_in_epoch:
                     torch.save(cnn.state_dict(), os.path.join(config.model_path, config.model_name))

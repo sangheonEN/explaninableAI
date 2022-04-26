@@ -1,11 +1,5 @@
-import os
 import argparse
-import torch
-import torch.nn as nn
-from torch.autograd import Variable
-
-import model
-import train
+from train import trainer
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -24,4 +18,4 @@ if __name__ == '__main__':
     config = parser.parse_args()
     print(config)
 
-    train(config)
+    trainer(config)
